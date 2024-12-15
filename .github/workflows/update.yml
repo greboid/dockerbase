@@ -1,0 +1,16 @@
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 9 * * *'
+  name: Update container
+  jobs:
+    build-base:
+      name: Build base
+      runs-on: ubuntu-latest
+      steps:
+        - name: Set date in var
+          run: |
+            echo "VERSTRING=$(date -u +%Y%m%d)" >> $GITHUB_ENV
+	- name: Build image
+          runs: |
+            apko publish base.yaml reg.g5d.dev/apkocentauri:1.$VERSTRING.0
