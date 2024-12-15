@@ -22,4 +22,4 @@ jobs:
           echo "VERSTRING=$(date -u +%Y%m%d)" >> $GITHUB_ENV
       - name: Build image
         run: |
-          apko publish base.yaml reg.g5d.dev/apkocentauri:1.$VERSTRING.0
+          apko publish base.yaml ghcr.io/greboid/dockerbase:1.$VERSTRING.0
