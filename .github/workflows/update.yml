@@ -20,6 +20,12 @@ jobs:
       - name: Install apko
         run: |
           go install chainguard.dev/apko@latest
+      - name: Pre-login GHCR
+        uses: redhat-actions/podman-login@v1.6
+        with:
+          registry: 'ghcr.io'
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GHCR_TOKEN }}
       - name: Set date in var
         run: |
           echo "VERSTRING=$(date -u +%Y%m%d)" >> $GITHUB_ENV
