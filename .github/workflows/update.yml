@@ -8,6 +8,13 @@ jobs:
     name: Build base
     runs-on: ubuntu-latest
     steps:
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+      - name: Install apko
+        run: |
+          go install chainguard.dev/apko@latest
       - name: Set date in var
         run: |
           echo "VERSTRING=$(date -u +%Y%m%d)" >> $GITHUB_ENV
