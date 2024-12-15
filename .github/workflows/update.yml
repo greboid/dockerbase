@@ -11,6 +11,6 @@ on:
         - name: Set date in var
           run: |
             echo "VERSTRING=$(date -u +%Y%m%d)" >> $GITHUB_ENV
-	- name: Build image
+        - name: Build image
           runs: |
             apko publish base.yaml reg.g5d.dev/apkocentauri:1.$VERSTRING.0
