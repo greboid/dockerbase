@@ -25,15 +25,18 @@ jobs:
       - name: Install apko
         run: |
           go install chainguard.dev/apko@latest
-      - name: Pre-login GHCR
-        uses: redhat-actions/podman-login@v1.6
-        with:
-          registry: ${{ env.IMAGE_REGISTRY }}
-          username: ${{ env.REGISTRY_USER }}
-          password: ${{ env.REGISTRY_PASSWORD }}
       - name: Set date in var
         run: |
           echo "VERSTRING=$(date -u +%Y%m%d)" >> $GITHUB_ENV
-      - name: Build image
+      - name: Generate lock file
         run: |
-          apko publish base.yaml ghcr.io/greboid/dockerbase/nonroot:1.$VERSTRING.0
+          apko lock base.yaml
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        id: auto-commit-action
+        with:
+          commit_message: Update base image for changes $VERSTRING
+      - name: Publish new image
+        if: steps.auto-commit-action.outputs.changes_detected == 'true'
+        run: |
+          apko publish --lockfile base.lock.json base.yaml ghcr.io/greboid/dockerbase/nonroot:1.$VERSTRING.0
