@@ -1,2 +1,3 @@
 sbom*.json
 *.tar
+old.lock.json

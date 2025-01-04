@@ -35,13 +35,18 @@ jobs:
         run: |
           echo "VERSTRING=$(date -u +%Y%m%d)" >> $GITHUB_ENV
       - name: Generate lock file
+        id: lockfile
         run: |
+          cp base.lock.json old.lock.json
           apko lock base.yaml
+          echo 'commit_message<<EOF' > $GITHUB_OUTPUT
+          go run . >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         id: auto-commit-action
         with:
-          commit_message: Update base image for changes $VERSTRING
+          commit_message: ${{ steps.commit_message_step.outputs.commit_message }}
       - name: Publish new image
         if: steps.auto-commit-action.outputs.changes_detected == 'true'
         run: |
