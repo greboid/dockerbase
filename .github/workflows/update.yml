@@ -39,7 +39,7 @@ jobs:
         run: |
           cp base.lock.json old.lock.json
           apko lock base.yaml
-          echo 'commit_message<<EOF' > $GITHUB_OUTPUT
+          echo 'commit_message<<EOF' >> $GITHUB_OUTPUT
           go run . >> $GITHUB_OUTPUT
           echo 'EOF' >> $GITHUB_OUTPUT
       - name: Commit changes
