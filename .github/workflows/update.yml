@@ -40,6 +40,7 @@ jobs:
           cp base.lock.json old.lock.json
           apko lock base.yaml
       - name: Generate changelog
+        run: |
           go run . >> commitmessage.txt
       - name: Set commit message
         run: |
