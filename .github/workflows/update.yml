@@ -37,21 +37,20 @@ jobs:
       - name: Generate lock file
         id: lockfile
         run: |
+          delimiter="$(openssl rand -hex 8)"
           cp base.lock.json old.lock.json
           apko lock base.yaml
-      - name: Generate changelog
-        run: |
           go run . >> commitmessage.txt
-      - name: Set commit message
-        run: |
-          echo 'commit_message<<EOF' >> $GITHUB_OUTPUT
+          cat commitmessage.txt
+          echo "commit_message<<${delimiter}" >> $GITHUB_OUTPUT
           cat commitmessage.txt >> $GITHUB_OUTPUT
-          echo 'EOF' >> $GITHUB_OUTPUT
+          echo "${delimiter}" >> $GITHUB_OUTPUT
+          echo $GITHUB_OUTPUT
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         id: auto-commit-action
         with:
-          commit_message: ${{ steps.commit_message_step.outputs.commitmessage }}
+          commit_message: ${{ steps.commit_message_step.outputs.commit_message }}
       - name: Publish new image
         if: steps.auto-commit-action.outputs.changes_detected == 'true'
         run: |
