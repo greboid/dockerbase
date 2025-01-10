@@ -48,7 +48,7 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         id: auto-commit-action
         with:
-          commit_message: ${{ steps.commit_message_step.lockfile.commit_message }}
+          commit_message: ${{ steps.lockfile.outputs.commit_message }}
       - name: Publish new image
         if: steps.auto-commit-action.outputs.changes_detected == 'true'
         run: |
