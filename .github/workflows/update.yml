@@ -40,9 +40,8 @@ jobs:
           delimiter="$(openssl rand -hex 8)"
           cp base.lock.json old.lock.json
           apko lock base.yaml
-          go run . >> commitmessage.txt
           echo "commit_message<<${delimiter}" >> $GITHUB_OUTPUT
-          cat commitmessage.txt >> $GITHUB_OUTPUT
+          go run . >> $GITHUB_OUTPUT
           echo "${delimiter}" >> $GITHUB_OUTPUT
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
