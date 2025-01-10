@@ -41,16 +41,14 @@ jobs:
           cp base.lock.json old.lock.json
           apko lock base.yaml
           go run . >> commitmessage.txt
-          cat commitmessage.txt
           echo "commit_message<<${delimiter}" >> $GITHUB_OUTPUT
           cat commitmessage.txt >> $GITHUB_OUTPUT
           echo "${delimiter}" >> $GITHUB_OUTPUT
-          echo $GITHUB_OUTPUT
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         id: auto-commit-action
         with:
-          commit_message: ${{ steps.commit_message_step.outputs.commit_message }}
+          commit_message: ${{ steps.commit_message_step.lockfile.commit_message }}
       - name: Publish new image
         if: steps.auto-commit-action.outputs.changes_detected == 'true'
         run: |
