@@ -1,5 +1,0 @@
-Updating to 20250110 with the following changes: 
- - x86_64
-    - ca-certificates-bundle: 20241121-r0 => 20241121-r1
- - aarch64
-    - ca-certificates-bundle: 20241121-r0 => 20241121-r1
