@@ -7,6 +7,7 @@
   "contents": {
     "keyring": [],
     "build_repositories": [],
+    "runtime_repositories": [],
     "repositories": [
       {
         "name": "dl-cdn.alpinelinux.org/alpine/v3.21/main/x86_64",
