@@ -22,6 +22,9 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: 'stable'
+      - name: Install latest
+        run: |
+          go install github.com/csmith/latest/cmd/alpine@latest
       - name: Install apko
         run: |
           go install chainguard.dev/apko@latest
@@ -34,6 +37,10 @@ jobs:
       - name: Set date in var
         run: |
           echo "VERSTRING=$(date -u +%Y%m%d)" >> $GITHUB_ENV
+      - name: Update Alpine version in base.yaml
+        run: |
+          ALPINE_VERSION=$(alpine | grep "Version:" | cut -d' ' -f2 | cut -d'.' -f1,2)
+          sed -i "s|https://dl-cdn.alpinelinux.org/alpine/v[0-9]*\.[0-9]*/main|https://dl-cdn.alpinelinux.org/alpine/v${ALPINE_VERSION}/main|g" base.yaml
       - name: Generate lock file
         id: lockfile
         run: |
