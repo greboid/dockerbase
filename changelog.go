@@ -25,6 +25,8 @@ func main() {
 	}
 	if len(changes) > 0 {
 		fmt.Printf("Updating to %s with the following changes: \n%s", os.Getenv("VERSTRING"), changes)
+	} else {
+		fmt.Printf("Updating to %s with the misc non package changes", os.Getenv("VERSTRING"))
 	}
 }
 
