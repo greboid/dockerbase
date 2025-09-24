@@ -45,7 +45,7 @@ jobs:
         id: lockfile
         run: |
           delimiter="$(openssl rand -hex 8)"
-          cp root.lock.json root.lock.json
+          cp root.lock.json old.lock.json
           apko lock root.yaml
           echo "commit_message<<${delimiter}" >> $GITHUB_OUTPUT
           go run . >> $GITHUB_OUTPUT
