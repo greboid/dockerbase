@@ -9,8 +9,8 @@ env:
   IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
 
 jobs:
-  build-base:
-    name: Build base
+  build:
+    name: Build
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -37,24 +37,31 @@ jobs:
       - name: Set date in var
         run: |
           echo "VERSTRING=$(date -u +%Y%m%d)" >> $GITHUB_ENV
-      - name: Update Alpine version in base.yaml
+      - name: Update Alpine version in root.yaml
         run: |
           ALPINE_VERSION=$(alpine | grep "Version:" | cut -d' ' -f2 | cut -d'.' -f1,2)
-          sed -i "s|https://dl-cdn.alpinelinux.org/alpine/v[0-9]*\.[0-9]*/main|https://dl-cdn.alpinelinux.org/alpine/v${ALPINE_VERSION}/main|g" base.yaml
-      - name: Generate lock file
+          sed -i "s|https://dl-cdn.alpinelinux.org/alpine/v[0-9]*\.[0-9]*/main|https://dl-cdn.alpinelinux.org/alpine/v${ALPINE_VERSION}/main|g" root.yaml
+      - name: Generate root lock file
         id: lockfile
         run: |
           delimiter="$(openssl rand -hex 8)"
-          cp base.lock.json old.lock.json
-          apko lock base.yaml
+          cp root.lock.json root.lock.json
+          apko lock root.yaml
           echo "commit_message<<${delimiter}" >> $GITHUB_OUTPUT
           go run . >> $GITHUB_OUTPUT
           echo "${delimiter}" >> $GITHUB_OUTPUT
+      - name: Generate non root lock file
+        run: |
+          apko lock base.yaml
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         id: auto-commit-action
         with:
           commit_message: ${{ steps.lockfile.outputs.commit_message }}
+      - name: Publish new image
+        if: steps.auto-commit-action.outputs.changes_detected == 'true'
+        run: |
+          apko publish --lockfile root.lock.json root.yaml ghcr.io/greboid/dockerbase/root:1.$VERSTRING.0
       - name: Publish new image
         if: steps.auto-commit-action.outputs.changes_detected == 'true'
         run: |

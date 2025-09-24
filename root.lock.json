@@ -1,8 +1,8 @@
 {
   "version": "v1",
   "config": {
-    "name": "base.yaml",
-    "checksum": "sha256-GYiWqEBXPTBVp0iXH9/HxPYma50NiamoxI5dButjPD0="
+    "name": "root.yaml",
+    "checksum": "sha256-QnoPFi+ISDnTzm5YF9OqC3e4SQ1qEcMiC5xcn9NyVHo="
   },
   "contents": {
     "keyring": [],

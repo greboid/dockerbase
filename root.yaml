@@ -1,0 +1,33 @@
+contents:
+  repositories:
+    - https://dl-cdn.alpinelinux.org/alpine/v3.22/main
+  packages:
+    - musl
+    - ca-certificates-bundle
+    - tzdata
+
+accounts:
+  groups:
+    - groupname: nobody
+      gid: 65534
+    - groupname: nonroot
+      gid: 65532
+  users:
+    - username: nobody
+      uid: 65534
+      gid: 65534
+    - username: nonroot
+      uid: 65532
+      gid: 65532
+  run-as: 0
+
+work-dir:
+  /home/nonroot
+
+environment:
+  SSL_CERT_FILE: /etc/ssl/certs/ca-certificates.crt
+  LANG: en_US.UTF-8
+
+archs:
+  - amd64
+  - aarch64
