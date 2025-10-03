@@ -23,22 +23,22 @@
     "packages": [
       {
         "name": "ca-certificates-bundle",
-        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.22/main/x86_64/ca-certificates-bundle-20250619-r0.apk",
-        "version": "20250619-r0",
+        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.22/main/x86_64/ca-certificates-bundle-20250911-r0.apk",
+        "version": "20250911-r0",
         "architecture": "x86_64",
         "signature": {
           "range": "bytes=0-721",
-          "checksum": "sha1-hrBSkA7IOKZ/9P3AlMK/v6LhfS4="
+          "checksum": "sha1-PjJyFKTZbn75FQar5tEM4brgOH0="
         },
         "control": {
-          "range": "bytes=722-1320",
-          "checksum": "sha1-Mr6RF/GHn0i0SCP7vS2eJqappQA="
+          "range": "bytes=722-1321",
+          "checksum": "sha1-jH7paEGfzZLVNCzeDFVAppWkrC0="
         },
         "data": {
-          "range": "bytes=1321-125409",
-          "checksum": "sha256-fmwZZnQ+28ZvmGoTf1cLVWNeOnwM+EF23MVHOckKKAE="
+          "range": "bytes=1322-129567",
+          "checksum": "sha256-pTdgi8R0iQNEzyJBXQjlSKNx4p0yqVvw4XRByPRGc5Y="
         },
-        "checksum": "Q1Mr6RF/GHn0i0SCP7vS2eJqappQA="
+        "checksum": "Q1jH7paEGfzZLVNCzeDFVAppWkrC0="
       },
       {
         "name": "musl",
@@ -80,22 +80,22 @@
       },
       {
         "name": "ca-certificates-bundle",
-        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.22/main/aarch64/ca-certificates-bundle-20250619-r0.apk",
-        "version": "20250619-r0",
+        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.22/main/aarch64/ca-certificates-bundle-20250911-r0.apk",
+        "version": "20250911-r0",
         "architecture": "aarch64",
         "signature": {
-          "range": "bytes=0-723",
-          "checksum": "sha1-XZT1qzzwOlt0xeFbwVPYns2vk0c="
+          "range": "bytes=0-721",
+          "checksum": "sha1-zYmbq3rYVwqmRt/e/PrYgoKafNU="
         },
         "control": {
-          "range": "bytes=724-1306",
-          "checksum": "sha1-w0VPqMzc20efgx22Jz4f/M3RrO0="
+          "range": "bytes=722-1304",
+          "checksum": "sha1-tOff+RwS3ZBJ863EIhsPXfNo4yE="
         },
         "data": {
-          "range": "bytes=1307-125395",
-          "checksum": "sha256-fmwZZnQ+28ZvmGoTf1cLVWNeOnwM+EF23MVHOckKKAE="
+          "range": "bytes=1305-129550",
+          "checksum": "sha256-pTdgi8R0iQNEzyJBXQjlSKNx4p0yqVvw4XRByPRGc5Y="
         },
-        "checksum": "Q1w0VPqMzc20efgx22Jz4f/M3RrO0="
+        "checksum": "Q1tOff+RwS3ZBJ863EIhsPXfNo4yE="
       },
       {
         "name": "musl",
