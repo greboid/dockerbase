@@ -25,9 +25,14 @@ jobs:
       - name: Install latest
         run: |
           go install github.com/csmith/latest/cmd/alpine@latest
-      - name: Install apko
+      - name: Install apko with cache fix
         run: |
-          go install chainguard.dev/apko@latest
+          git clone --depth 1 https://github.com/chainguard-dev/apko.git /tmp/apko
+          cd /tmp/apko
+          gh pr checkout 1949
+          go build -o $HOME/go/bin/apko .
+        env:
+          GH_TOKEN: ${{ github.token }}
       - name: Login to GHCR
         uses: redhat-actions/podman-login@v1.6
         with:
