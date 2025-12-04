@@ -1,6 +1,6 @@
 contents:
   repositories:
-    - https://dl-cdn.alpinelinux.org/alpine/v3.23/main
+    - https://dl-cdn.alpinelinux.org/alpine/v3.22/main
   packages:
     - musl
     - ca-certificates-bundle
