@@ -3,9 +3,6 @@ on:
   schedule:
     - cron: '0 9 * * *'
 name: Update container
-permissions:
-  packages: write
-  contents: read
 env:
   REGISTRY_USER: ${{ github.actor }}
   REGISTRY_PASSWORD: ${{ github.token }}
@@ -15,9 +12,7 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      packages: write
+    permissions: write-all
     steps:
       - name: Checkout
         uses: actions/checkout@v4
