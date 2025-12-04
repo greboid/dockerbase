@@ -3,6 +3,9 @@ on:
   schedule:
     - cron: '0 9 * * *'
 name: Update container
+permissions:
+  packages: write
+  contents: read
 env:
   REGISTRY_USER: ${{ github.actor }}
   REGISTRY_PASSWORD: ${{ github.token }}
