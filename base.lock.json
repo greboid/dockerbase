@@ -42,22 +42,22 @@
       },
       {
         "name": "musl",
-        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.23/main/x86_64/musl-1.2.5-r22.apk",
-        "version": "1.2.5-r22",
+        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.23/main/x86_64/musl-1.2.5-r23.apk",
+        "version": "1.2.5-r23",
         "architecture": "x86_64",
         "signature": {
           "range": "bytes=0-721",
-          "checksum": "sha1-gIQXfWoplrDC1E0V+wh+n7ZxGbI="
+          "checksum": "sha1-QsOpQYnfjjYqDHQ3cX2RpXvRiNg="
         },
         "control": {
-          "range": "bytes=722-1242",
-          "checksum": "sha1-gHA1hVmANU2Unxr6sYJUpUvLuhI="
+          "range": "bytes=722-1245",
+          "checksum": "sha1-G2xQQm08BlbpxaVnpaWWAcf0MHo="
         },
         "data": {
-          "range": "bytes=1243-413969",
-          "checksum": "sha256-eiBAXideq34pYIyibdBAyM4vbvz3ZRUjAtXG6nJGLeo="
+          "range": "bytes=1246-414070",
+          "checksum": "sha256-djAMMETd5wi5eOEHWVsfBwVLIM6gHbfFsLx7dsNGzPo="
         },
-        "checksum": "Q1gHA1hVmANU2Unxr6sYJUpUvLuhI="
+        "checksum": "Q1G2xQQm08BlbpxaVnpaWWAcf0MHo="
       },
       {
         "name": "tzdata",
@@ -99,22 +99,22 @@
       },
       {
         "name": "musl",
-        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.23/main/aarch64/musl-1.2.5-r22.apk",
-        "version": "1.2.5-r22",
+        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.23/main/aarch64/musl-1.2.5-r23.apk",
+        "version": "1.2.5-r23",
         "architecture": "aarch64",
         "signature": {
           "range": "bytes=0-721",
-          "checksum": "sha1-HTLS5krLWt76BXtxJAsJhGFXOyc="
+          "checksum": "sha1-BC0ttkOobcgnE12Ji3oH6xsjqpw="
         },
         "control": {
-          "range": "bytes=722-1226",
-          "checksum": "sha1-vvrly55zrIibtCw2xAz2XznlgpQ="
+          "range": "bytes=722-1228",
+          "checksum": "sha1-htKIaEsBKo1P1SXDlnR87oYkBzM="
         },
         "data": {
-          "range": "bytes=1227-416041",
-          "checksum": "sha256-ss0dOgvsLsDKGhgaxPiKEQ3aQIPsGCKPX7zIqci9iM8="
+          "range": "bytes=1229-416103",
+          "checksum": "sha256-WXn20zxBjRLuPbKMA4TcXyHNECXnKcAKWl413Ogcsj0="
         },
-        "checksum": "Q1vvrly55zrIibtCw2xAz2XznlgpQ="
+        "checksum": "Q1htKIaEsBKo1P1SXDlnR87oYkBzM="
       },
       {
         "name": "tzdata",
