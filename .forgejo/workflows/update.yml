@@ -1,0 +1,93 @@
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 9 * * *'
+name: Update container
+
+enable-openid-connect: true
+
+jobs:
+  build:
+    name: Build
+    runs-on: alpine
+    steps:
+      - uses: actions/toolkit/git-checkout@master
+      - uses: actions/toolkit/go-setup@master
+        with:
+          go-version: 1.27
+      - uses: actions/toolkit/docker-login@master
+        with:
+          audience: u:1:cccd76b3-5cf6-4d77-9549-5c4cb7ddaaf0
+      - name: Install apko with cache fix
+        run: |
+          git clone --depth 1 https://github.com/chainguard-dev/apko.git /tmp/apko
+          cd /tmp/apko
+          git fetch origin pull/1949/head:pr-1949
+          git checkout pr-1949
+          go build -o $HOME/go/bin/apko .
+          echo "$HOME/go/bin" >> $GITHUB_PATH
+      - name: Login to GHCR
+        uses: actions/toolkit/docker-login@master
+        with:
+          registry: ghcr.io
+          username: greboid
+          password: ${{ secrets.REMOTE_TOKEN }}
+      - name: Set date in var
+        run: |
+          echo "VERSTRING=$(date -u +%Y%m%d)" >> $GITHUB_ENV
+      - name: Update Alpine version in root.yaml
+        run: |
+          ALPINE_VERSION=$(wget -qO- https://dl-cdn.alpinelinux.org/alpine/latest-stable/releases/x86_64/latest-releases.yaml | awk '$1=="version:"{print $2; exit}' | cut -d. -f1,2)
+          echo "ALPINE_VERSION=${ALPINE_VERSION}"
+          if [ -z "$ALPINE_VERSION" ]; then
+            echo "failed to determine Alpine version" >&2
+            exit 1
+          fi
+          sed -i "s|/alpine/v[^/]*/main|/alpine/v${ALPINE_VERSION}/main|g" root.yaml
+      - name: Generate root lock file
+        run: |
+          cp root.lock.json old.lock.json
+          apko lock root.yaml
+      - name: Generate changelog
+        id: changelog
+        uses: actions/toolkit/apko-changelog@master
+        with:
+          new-lockfile: root.lock.json
+          old-lockfile: old.lock.json
+          version: ${{ env.VERSTRING }}
+      - name: Generate non root lock file
+        run: |
+          apko lock base.yaml
+      - name: Commit changes
+        id: auto-commit-action
+        run: |
+          git config user.name greboid
+          git config user.email greboid@noreply.mouse-lake.ts.net
+          git add -A
+          if git diff --cached --quiet; then
+            echo "changes_detected=false" >> "$GITHUB_OUTPUT"
+          else
+            git commit -m "${{ steps.changelog.outputs.message }}"
+            echo "changes_detected=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Publish new image
+        if: steps.auto-commit-action.outputs.changes_detected == 'true'
+        run: |
+          apko publish --lockfile root.lock.json root.yaml ghcr.io/greboid/dockerbase/root:1.$VERSTRING.0
+          apko publish --lockfile root.lock.json root.yaml git.mouse-lake.ts.net/greboid/dockerbase/root:1.$VERSTRING.0
+      - name: Publish new image
+        if: steps.auto-commit-action.outputs.changes_detected == 'true'
+        run: |
+          apko publish --lockfile base.lock.json base.yaml ghcr.io/greboid/dockerbase/nonroot:1.$VERSTRING.0
+          apko publish --lockfile base.lock.json base.yaml git.mouse-lake.ts.net/greboid/dockerbase/nonroot:1.$VERSTRING.0
+      - name: Push changes
+        if: steps.auto-commit-action.outputs.changes_detected == 'true'
+        run: |
+          for i in 1 2 3 4 5; do
+            if git push "https://oauth2:${{ secrets.GITHUB_TOKEN }}@git.mouse-lake.ts.net/greboid/dockerbase.git" HEAD:master; then
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "git push failed after 5 attempts" >&2
+          exit 1
