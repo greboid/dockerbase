@@ -84,7 +84,7 @@ jobs:
         if: steps.auto-commit-action.outputs.changes_detected == 'true'
         run: |
           for i in 1 2 3 4 5; do
-            if git push "https://oauth2:${{ secrets.MIRROR_TOKEN }}@git.mouse-lake.ts.net/greboid/dockerbase.git" HEAD:master; then
+            if git push "https://oauth2:${{ secrets.FJ_TOKEN }}@git.mouse-lake.ts.net/greboid/dockerbase.git" HEAD:master; then
               exit 0
             fi
             sleep 5
