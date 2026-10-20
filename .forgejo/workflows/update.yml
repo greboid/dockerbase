@@ -30,6 +30,17 @@ jobs:
       - name: Set date in var
         run: |
           echo "VERSTRING=$(date -u +%Y%m%d)" >> $GITHUB_ENV
+      - name: Determine image version
+        id: pkg
+        uses: actions/toolkit/package-latest@master
+        with:
+          type: container
+          package: dockerbase/root
+          prefix: 1.${{ env.VERSTRING }}.
+      - name: Set image tag
+        run: |
+          echo "IMAGE_TAG=${{ steps.pkg.outputs.next }}" >> "$GITHUB_ENV"
+          echo "Image tag for this run: ${{ steps.pkg.outputs.next }}"
       - name: Update Alpine version in root.yaml
         run: |
           ALPINE_VERSION=$(wget -qO- https://dl-cdn.alpinelinux.org/alpine/latest-stable/releases/x86_64/latest-releases.yaml | awk '$1=="version:"{print $2; exit}' | cut -d. -f1,2)
@@ -70,13 +81,13 @@ jobs:
       - name: Publish new image
         if: steps.auto-commit-action.outputs.changes_detected == 'true'
         run: |
-          apko publish --lockfile root.lock.json root.yaml ghcr.io/greboid/dockerbase/root:1.$VERSTRING.0
-          apko publish --lockfile root.lock.json root.yaml git.mouse-lake.ts.net/greboid/dockerbase/root:1.$VERSTRING.0
+          apko publish --lockfile root.lock.json root.yaml ghcr.io/greboid/dockerbase/root:$IMAGE_TAG
+          apko publish --lockfile root.lock.json root.yaml git.mouse-lake.ts.net/greboid/dockerbase/root:$IMAGE_TAG
       - name: Publish nonroot image
         if: steps.auto-commit-action.outputs.changes_detected == 'true'
         run: |
-          apko publish --lockfile base.lock.json base.yaml ghcr.io/greboid/dockerbase/nonroot:1.$VERSTRING.0
-          apko publish --lockfile base.lock.json base.yaml git.mouse-lake.ts.net/greboid/dockerbase/nonroot:1.$VERSTRING.0
+          apko publish --lockfile base.lock.json base.yaml ghcr.io/greboid/dockerbase/nonroot:$IMAGE_TAG
+          apko publish --lockfile base.lock.json base.yaml git.mouse-lake.ts.net/greboid/dockerbase/nonroot:$IMAGE_TAG
       - name: Push changes
         if: steps.auto-commit-action.outputs.changes_detected == 'true'
         run: |
