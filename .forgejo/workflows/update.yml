@@ -12,20 +12,15 @@ jobs:
     runs-on: alpine
     steps:
       - uses: actions/toolkit/git-checkout@master
-      - uses: actions/toolkit/go-setup@master
-        with:
-          go-version: 1.27
       - uses: actions/toolkit/docker-login@master
         with:
           audience: u:1:cccd76b3-5cf6-4d77-9549-5c4cb7ddaaf0
-      - name: Install apko with cache fix
+      - name: Install apko
         run: |
-          git clone --depth 1 https://github.com/chainguard-dev/apko.git /tmp/apko
-          cd /tmp/apko
-          git fetch origin pull/1949/head:pr-1949
-          git checkout pr-1949
-          go build -o $HOME/go/bin/apko .
-          echo "$HOME/go/bin" >> $GITHUB_PATH
+          wget -q -O /etc/apk/keys/packages-mouse-lake.rsa.pub https://git.mouse-lake.ts.net/api/packages/packages/alpine/key
+          echo "https://git.mouse-lake.ts.net/api/packages/packages/alpine/v3.24/main" >> /etc/apk/repositories
+          apk update
+          apk add apko
       - name: Login to GHCR
         uses: actions/toolkit/docker-login@master
         with:
