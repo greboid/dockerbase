@@ -91,22 +91,22 @@
       },
       {
         "name": "ca-certificates-bundle",
-        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.24/main/aarch64/ca-certificates-bundle-20260909-r0.apk",
-        "version": "20260909-r0",
+        "url": "https://dl-cdn.alpinelinux.org/alpine/v3.24/main/aarch64/ca-certificates-bundle-20261020-r0.apk",
+        "version": "20261020-r0",
         "architecture": "aarch64",
         "signature": {
-          "range": "bytes=0-721",
-          "checksum": "sha1-djOxvn2uEvT7aM4X14S/cBu390Q="
+          "range": "bytes=0-719",
+          "checksum": "sha1-DHvvIiktfIQ3X9PDGdtucG+4dU0="
         },
         "control": {
-          "range": "bytes=722-1307",
-          "checksum": "sha1-FGTYu4SxbeFGQyIqvXBBZvKmLPY="
+          "range": "bytes=720-1299",
+          "checksum": "sha1-1TztRkPmb8I4jKteprSsaIu3KW8="
         },
         "data": {
-          "range": "bytes=1308-108525",
-          "checksum": "sha256-A4PJtnzsfyL/Ri1OrStAqbIk+h4xYf4yy+I0mbiiRPQ="
+          "range": "bytes=1300-107098",
+          "checksum": "sha256-i7JSpufbjHD9CnPr4AzdnaQhI4MyP6BULNqCyDAH/Q0="
         },
-        "checksum": "Q1FGTYu4SxbeFGQyIqvXBBZvKmLPY="
+        "checksum": "Q11TztRkPmb8I4jKteprSsaIu3KW8="
       },
       {
         "name": "musl",
